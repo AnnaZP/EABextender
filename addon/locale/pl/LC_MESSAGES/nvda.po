@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the goldenCursor package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goldenShortcut 1.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2025-12-30 07:00+1000\n"
+"PO-Revision-Date: 2025-12-30 13:26+0200\n"
+"Last-Translator: Anna\n"
+"Language-Team: pl \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+
+# Translators: The label for the list view of the accords for the current profile.
+msgid "&Shorcut list"
+msgstr "&Lista skrótów"
+
+msgid "Accord"
+msgstr "Akord"
+
+msgid "Shortcut"
+msgstr " Skrót"
+
+# Translators: the title of the profile definition dialog
+msgid "Defining profile {profileName} for {aName}"
+msgstr "Definiowanie profilu {profileName} dla {aName}"
+
+#Translators: title of the dialog window listing profiles for selected application
+msgid "Profile selector for %s"
+msgstr "Wybór profilu dla %s"
+
+# Translators: An error displayed when the application on focus was not found.
+msgid "Sorry, something went terribly wrong."
+msgstr "Coś poszło nie tak"
+
+msgid "Error"
+msgstr "Błąd"
+
+# Translators: The label for the list view of the profiles in the current application.
+msgid "&Saved profiles"
+msgstr "&Zachowane profile"
+
+# Translators: the button to activate a profile position.
+msgid "&Activate"
+msgstr "&Aktywuj"
+
+# Translators: the button to define the shortcuts for this profile.
+msgid "&Define"
+msgstr "&Definiuj"
+
+#. Translators: the button to rename a profile name.
+msgid "&Rename"
+msgstr "&Zmień nazwę"
+
+#. Translators: the button to delete the profile.
+msgid "&Delete"
+msgstr "&Usuń"
+
+# Translators: the button to create a new profile for this app.
+msgid "&New"
+msgstr "&Nowy"
+
+#. Translators: The label of a button to close the profile listing dialog.
+msgid "&Close"
+msgstr "&Zamknij"
+
+#. Translators: the column in profile list to identify the profile name.
+msgid "Name"
+msgstr "Nazwa"
+
+#. Translators: The label of a field to enter a new name for a mouse profile.
+msgid "New name"
+msgstr "Nowa nazwa"
+
+#. Translators: The title of the dialog to rename a profile.
+msgid "Rename"
+msgstr "Zmień nazwę"
+
+#. Translators: An error displayed when renaming a profile
+#. with the new name already exists.
+msgid ""
+"Another profile has the same name as the entered name. Please choose "
+"a different name."
+msgstr "Inny profil ma taką samą nazwę. Proszę wybrać inną nazwę."
+
+# Translators: The label of a field to enter a new name for a profile.
+msgid "Profile name"
+msgstr "Nazwa profilu"
+
+# Translators: The title of the dialog to rename a profile.
+msgid "New profile"
+msgstr "Nowy profil"
+
+# Translators: An error displayed when creating a profile
+# and a tag with the new name already exists.
+msgid "Please choose a different name."
+msgstr "Proszę wybrać inną nazwę."
+
+#. Translators: The confirmation prompt displayed when the user requests to delete the selected tag.
+#, python-brace-format
+msgid ""
+"Are you sure you want to delete the profile named {name}? This cannot be "
+"undone."
+msgstr ""
+"Czy chcesz usunąć profil nazwany {name}? ta operacja jest nieodwracalna."
+
+#. Translators: The title of the confirmation dialog for deletion of selected position.
+msgid "Delete profile"
+msgstr "Usuń profil"
+
+# Translators: The confirmation prompt displayed when the user requests to activate the selected profile.
+msgid "Do you want to activate the profile named {name}?"
+msgstr "Czy chcesz aktywować profil nazwany {name}?"
+
+# Translators: The title of the confirmation dialog for activating selected profile.
+msgid "Activate profile"
+msgstr "Aktywuj profil"
+
+# Translators: An error trying to define a profile when there isnt any
+msgid "Please create some profiles."
+msgstr "Proszę stworzyć profile."
+
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "Golden Shortcut"
+msgstr "Golden Shortcut"
+
+# Translators: input help message for a Golden Shortcut command.
+msgid "Opens a dialog listing profiles for the current application"
+msgstr ""
+"Otwiera dialog pokazujący wszystkie profile dla aktualnej aplikacji"
+
+msgid "Braille"
+msgstr "Brajl"
+
+msgid "Configuration"
+msgstr "Ustawienia"
+
+msgid "Moves the braille display to the previous line"
+msgstr "Przenosi linijkę brajlowską do poprzedniej linii"
+
+msgid "Moves the braille display to the next line"
+msgstr "Przenosi linijkę brajlowską do następnej linii"
+
+msgid "Scrolls the braille display back"
+msgstr "Przewija brajl do tyłu"
+
+msgid "Scrolls the braille display forward"
+msgstr "Przewija brajl w przód"
+
+msgid "Shows NVDA's braille settings"
+msgstr "Otwiera Ustawienia brajla"
