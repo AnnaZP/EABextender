@@ -4,7 +4,7 @@
 # Version 1.0
 # License GNU GPL
 # Date: 25/12/2025
-# work: Michal Kijewski, Anna Zych-Pawlewicz and the authors of Golden Cursor
+# work: LUMEN PL
 
 # Define context sensitive keyboard shortcuts for Papenmeier braille terminals  
 
@@ -195,8 +195,8 @@ class AccordInputDialog(wx.Dialog):
         inputCore.manager._captureFunc = self.addGestureCaptor
         
     def addGestureCaptor(self, gesture: inputCore.InputGesture):
-        if gesture.isModifier:
-            return False
+        #if gesture.isModifier:
+        #    return False
         inputCore.manager._captureFunc = None
         wx.CallAfter(self.saveShortCut, gesture.identifiers[-1])
         return False
@@ -254,14 +254,9 @@ class ProfileList(wx.Dialog):
             self.otherDialog = None
             self.ListProfileList(appName=appName)
         else:
-            #TU JAKIS KoMUNIKAT BLEDU
-            gui.messageBox(
-                # Translators: An error displayed when the application on focus was not found.
-                _("Sorry, something went terribly wrong."),
-                _("Error"), 
-                wx.OK | wx.ICON_ERROR, 
-                self
-            )
+            # this should never happen.
+            ui.message(_("Sorry, something went wrong."))
+            log.error("Cannot recognize active application - this should never happen.")
             
     def onListKeyDown(self,event):
         key = event.GetKeyCode()
@@ -406,22 +401,19 @@ class ProfileList(wx.Dialog):
             
         self.otherDialog.Destroy()
         self.otherDialog = None
-#        name = wx.GetTextFromUser(
-#            # Translators: The label of a field to enter a new name for a profile.
-#            _("New name"),
-#            # Translators: The title of the dialog to rename a profile.
-#            _("Rename"), oldName
-#        )
+
         # When escape is pressed, an empty string is returned.
         if name in ("", oldName):
             return
         if name in self.profiles:
-            gui.messageBox(
-                # Translators: An error displayed when renaming a profile
+            ui.message(_("Another profile has the same name as the entered name. Please choose a different name."))
+            log.warning("Rename: trying to use the same profile name twice.")
+            #gui.messageBox(
+            #    # Translators: An error displayed when renaming a profile
                 # with the new name already exists.
-                _("Another profile has the same name as the entered name. Please choose a different name."),
-                _("Error"), wx.OK | wx.ICON_ERROR, self
-            )
+            #    _("Another profile has the same name as the entered name. Please choose a different name."),
+            #    _("Error"), wx.OK | wx.ICON_ERROR, self
+            #)
             return
 
         
@@ -459,12 +451,14 @@ class ProfileList(wx.Dialog):
         if name in (""):
             return
         if name in self.profiles or name == "activProf":
-            gui.messageBox(
+            ui.message(_("Please choose a different name."))
+            log.warning("New: the new profile name has to be different than existing ones.")
+            #gui.messageBox(
                 # Translators: An error displayed when creating a profile
                 # and a tag with the new name already exists.
-                _("Please choose a different name."),
-                _("Error"), wx.OK | wx.ICON_ERROR, self
-            )
+            #    _("Please choose a different name."),
+            #    _("Error"), wx.OK | wx.ICON_ERROR, self
+            #)
             return
         self.ListProfileList.InsertItem(self.ListProfileList.GetItemCount(),name)
         
@@ -482,20 +476,19 @@ class ProfileList(wx.Dialog):
     def onDelete(self,event):
         if self.ListProfileList.GetItemCount() == 0:
             return;
-        message, title = "", ""
+        #message, title = "", ""
         entry = self.ListProfileList.GetFirstSelected()
         name = self.ListProfileList.GetItemText(entry)
-        message = _(
+        #message = _(
                 # Translators: The confirmation prompt displayed when the user requests to delete the selected tag.
-                "Are you sure you want to delete the profile named {name}? This cannot be undone."
-            ).format(name=name)
+        #        "Are you sure you want to delete the profile named {name}? This cannot be undone."
+        #    ).format(name=name)
         # Translators: The title of the confirmation dialog for deletion of selected position.
-        title = _("Delete profile")
-        if gui.messageBox(
-            message, title, wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION, self
-        ) == wx.NO:
-            return
-		
+        #title = _("Delete profile")
+        #if gui.messageBox(
+        #    message, title, wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION, self
+        #) == wx.NO:
+        #    return
         delActive = False
 
         if name == self.activeprof :
@@ -539,11 +532,13 @@ class ProfileList(wx.Dialog):
         
     def onDefine(self,event):
         if self.ListProfileList.GetItemCount() == 0:
-            gui.messageBox(
+            ui.message(_("Please create some profiles."))
+            log.warning("Define: cannot define an empty profile.")
+            #gui.messageBox(
                 # Translators: An error trying to define a profile when there isnt any
-                _("Please create some profiles."),
-                _("Error"), wx.OK | wx.ICON_ERROR, self
-            )
+            #    _("Please create some profiles."),
+            #    _("Error"), wx.OK | wx.ICON_ERROR, self
+            #)
             return
         entry = self.ListProfileList.GetFirstSelected()
         profileName = self.ListProfileList.GetItemText(entry)
@@ -569,7 +564,7 @@ class ProfileList(wx.Dialog):
         self.profiles = None
         
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    scriptCategory = _("Golden Shortcut")
+    scriptCategory = _("EABextender")
 
     def __init__(self, *args, **kwargs):
         super(GlobalPlugin, self).__init__(*args, **kwargs)

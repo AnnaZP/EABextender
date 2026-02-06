@@ -6,7 +6,7 @@ forked from:
 
 #golden cursor#
 
-* Author: Michal Kijewski, Anna Zych-Pawlewicz
+* Author: LUMEN PL
 * NVDA compatibility: 2019.3 and beyond
 
 This add-on allows you to define keyboard shortcuts for Papenmeier Braille devices.
