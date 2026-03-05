@@ -61,6 +61,26 @@ class EnterName(wx.TextEntryDialog):
         EnterName._instance = weakref.ref(self)
 
         super(EnterName, self).__init__(*args, **kwargs)
+        
+class DeleteConfirmationDialog(wx.Dialog):
+    def __init__(self, parent, name):
+        title = _("Delete profile")
+        super().__init__(parent, title=title)
+
+        message = _(
+            "Are you sure you want to delete the profile named {name}? "
+            "This cannot be undone."
+        ).format(name=name)
+
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+        text = wx.StaticText(self, label=message)
+        mainSizer.Add(text, 0, wx.ALL, 10)
+
+        btnSizer = self.CreateButtonSizer(wx.YES | wx.CANCEL)
+        mainSizer.Add(btnSizer, 0, wx.ALL | wx.ALIGN_CENTER, 10)
+
+        self.SetSizerAndFit(mainSizer)
 
 class AccordInputDialog(wx.Dialog):
     def __init__(self, parent, title,inputString):
@@ -195,8 +215,8 @@ class AccordInputDialog(wx.Dialog):
         inputCore.manager._captureFunc = self.addGestureCaptor
         
     def addGestureCaptor(self, gesture: inputCore.InputGesture):
-        #if gesture.isModifier:
-        #    return False
+        if gesture.isModifier:
+            return False
         inputCore.manager._captureFunc = None
         wx.CallAfter(self.saveShortCut, gesture.identifiers[-1])
         return False
@@ -252,6 +272,7 @@ class ProfileList(wx.Dialog):
             self.appModule = appModule
             self.profileDefinitionDialog = None
             self.otherDialog = None
+            self.dlgDelete = None
             self.ListProfileList(appName=appName)
         else:
             # this should never happen.
@@ -327,7 +348,7 @@ class ProfileList(wx.Dialog):
 
         activateButtonID = wx.NewIdRef()
         # Translators: the button to activate a profile position.
-        bHelper.addButton(self, activateButtonID, _("&Activate"), wx.DefaultPosition)
+        bHelper.addButton(self, activateButtonID, _("&OK"), wx.DefaultPosition)
 
         defineButtonID = wx.NewIdRef()
         # Translators: the button to define the shortcuts for this profile.
@@ -480,15 +501,23 @@ class ProfileList(wx.Dialog):
         entry = self.ListProfileList.GetFirstSelected()
         name = self.ListProfileList.GetItemText(entry)
         #message = _(
-                # Translators: The confirmation prompt displayed when the user requests to delete the selected tag.
+        #        # Translators: The confirmation prompt displayed when the user requests to delete the selected tag.
         #        "Are you sure you want to delete the profile named {name}? This cannot be undone."
         #    ).format(name=name)
-        # Translators: The title of the confirmation dialog for deletion of selected position.
+        ## Translators: The title of the confirmation dialog for deletion of selected position.
         #title = _("Delete profile")
         #if gui.messageBox(
         #    message, title, wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION, self
         #) == wx.NO:
         #    return
+        
+        self.dlgDelete = DeleteConfirmationDialog(self, name)
+        result = self.dlgDelete.ShowModal()
+        self.dlgDelete.Destroy()
+
+        if result != wx.ID_YES:
+            return      
+        
         delActive = False
 
         if name == self.activeprof :
@@ -665,6 +694,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 if self.mainDialog.otherDialog:
                     if getattr(obj, "windowHandle", None) == self.mainDialog.otherDialog.GetHandle():
                         return True
+                if self.mainDialog.dlgDelete:
+                    if getattr(obj, "windowHandle", None) == self.mainDialog.dlgDelete.GetHandle():
+                        return True        
                     
                 obj = obj.parent
                 
