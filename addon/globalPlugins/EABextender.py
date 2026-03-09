@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# golden shortcut
+# EABextender
 # Copyright (C) 2025
 # Version 1.0
 # License GNU GPL
@@ -31,36 +31,10 @@ log = logging.getLogger("EABextender")
 # Turning on the translation
 addonHandler.initTranslation()
 
-# Each global constant is prefixed with "GS" for no reason at all.
+# Each global constant is prefixed with "GS".
 
 # Constants
 GSProfiles = os.path.join(globalVars.appArgs.configPath, "addons", "EABextender", "Profiles")
-
-#we are not using this at the moment, not sure why GC is using it
-class EnterName(wx.TextEntryDialog):
-    """
-    This subclass of the wx.TextEntryDialog class was created to
-    prevent multiple instances of the dialog box that propose to give a name to the current mouse position.
-    This dialog can be opened via the script_saveMousePosition accessible with the nvda+shift+l shortcut.
-    """
-    # The following comes from exit dialog class from GUI package (credit: NV Access and Zahari from Bulgaria).
-    _instance = None
-
-    def __new__(cls, parent, *args, **kwargs):
-        inst = cls._instance() if cls._instance else None
-        if not inst:
-            return super(cls, cls).__new__(cls, parent, *args, **kwargs)
-        return inst
-
-    def __init__(self, *args, **kwargs):
-        inst = EnterName._instance() if EnterName._instance else None
-        if inst:
-            return
-        # Use a weakref so the instance can die.
-        import weakref
-        EnterName._instance = weakref.ref(self)
-
-        super(EnterName, self).__init__(*args, **kwargs)
         
 class DeleteConfirmationDialog(wx.Dialog):
     def __init__(self, parent, name):
@@ -317,7 +291,6 @@ class ProfileList(wx.Dialog):
                 lc.Focus(count-1)
                 return
                 
-
                 
         event.Skip()
 
@@ -487,10 +460,15 @@ class ProfileList(wx.Dialog):
         # the routing keyboard shortcuts are already in NVDA
         # for the EAB left/right/up/down we need to extra code the assignment of the action to the keyboard shortcut
         self.profiles[name]="alt+CONTROL+shift+leftArrow,alt+CONTROL+shift+rightArrow,alt+CONTROL+shift+upArrow,alt+CONTROL+shift+downArrow,NVDA+numpad4,NVDA+numpad6,NVDA+numpad8,NVDA+numpad2"
-        if(self.ListProfileList.GetItemCount()==1):
-            self.ListProfileList.Select(0, on=1)
-            self.ListProfileList.SetItemState(0, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
+        
+        itemCount = self.ListProfileList.GetItemCount()
+        selectedIndex = itemCount-1
+        
+        if( itemCount == 1 ):
             self.profiles["activProf"]=name
+            
+        self.ListProfileList.Select(selectedIndex, on=1)
+        self.ListProfileList.SetItemState(selectedIndex, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
             
         self.ListProfileList.SetFocus()
 
